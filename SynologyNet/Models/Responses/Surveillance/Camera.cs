@@ -60,7 +60,7 @@ namespace SynologyNet.Models.Surveillance
     public class CameraListData
     {
         [JsonPropertyName("total")]
-        public int Total { get; set; } = 69;
+        public int Total { get; set; }
 
         [JsonPropertyName("cameras")]
         public IEnumerable<Camera> Cameras { get; set; }

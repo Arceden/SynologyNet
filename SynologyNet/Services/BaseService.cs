@@ -6,6 +6,9 @@ namespace SynologyNet.Services
 {
     public class BaseService
     {
+        protected virtual void CheckErrorCode(BaseResponse response)
+            => CheckErrorCode<CommonErrorCode>(response);
+
         protected virtual void CheckErrorCode<TErrorCode>(BaseResponse response)
             where TErrorCode : Enum
         {

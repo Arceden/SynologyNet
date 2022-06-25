@@ -40,5 +40,15 @@ namespace SynologyNet.Services
 
             return response.Data.List;
         }
+
+        public Task<byte[]> DownloadPhoto(int photoId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<byte[]> DownloadPhoto(int photoId, string passphrase)
+        {
+            return await Repository.DownloadPhoto(photoId, passphrase);
+        }
     }
 }

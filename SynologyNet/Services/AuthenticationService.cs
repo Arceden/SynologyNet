@@ -25,7 +25,13 @@ namespace SynologyNet.Services
             CheckErrorCode<AuthenticationErrorCode>(response);
 
             if (response.Success && response.Data.SID != null)
+            {
+                if (KeyHelper.HasSession(session))
+                    KeyHelper.ClearSession(session);
+
                 KeyHelper.AddSession(response.Data.SID, session: session);
+            }
+
 
             return response.Success && response.Data.SID != null;
         }

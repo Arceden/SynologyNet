@@ -24,5 +24,20 @@ namespace SynologyNet.Services.Interfaces
         /// <param name="album">Album to get photos from</param>
         /// <returns>List of photos</returns>
         Task<IEnumerable<Photo>> GetPhotosFromAlbum(Album album);
+
+        /// <summary>
+        /// Download photo as byte array
+        /// </summary>
+        /// <param name="photoId">Photo identifier</param>
+        /// <returns>Photo as byte array</returns>
+        Task<byte[]> DownloadPhoto(int photoId);
+
+        /// <summary>
+        /// Download photo from shared album as byte array
+        /// </summary>
+        /// <param name="photoId">Photo identifier</param>
+        /// <param name="passphrase">Shared album passphrase</param>
+        /// <returns>Photo as byte array</returns>
+        Task<byte[]> DownloadPhoto(int photoId, string passphrase);
     }
 }

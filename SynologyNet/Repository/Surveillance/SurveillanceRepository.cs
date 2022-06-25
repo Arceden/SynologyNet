@@ -2,7 +2,6 @@
 using SynologyNet.Attributes;
 using SynologyNet.Models.Surveillance;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SynologyNet.Repository
@@ -26,14 +25,6 @@ namespace SynologyNet.Repository
             request.AddParameter("streamInfo", true);
 
             return await _client.GetAsync<CameraList>(request);
-        }
-
-        public async Task<LiveViewPathInfoContainer> GetLiveViewPaths()
-        {
-            var camerasList = await GetCameras();
-            var cameraIds = camerasList.Data.Cameras.Select(c => c.Id).ToArray();
-
-            return await GetLiveViewPaths(cameraIds);
         }
 
         [Request(Api = "SYNO.SurveillanceStation.Camera", Method = "GetLiveViewPath", Version = 9, RequiresAuthentication = true)]

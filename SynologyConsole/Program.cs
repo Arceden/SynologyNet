@@ -13,6 +13,8 @@ var username = config["Synology:Username"];
 var password = config["Synology:Password"];
 var synology = new Synology(host, username, password);
 
+var info = await synology.General.GetApiInformation();
+
 Console.WriteLine($"Logged in: {synology.Authentication.IsAuthenticated}");
 Console.WriteLine(await synology.Authentication.Login());
 Console.WriteLine($"Logged in: {synology.Authentication.IsAuthenticated}");
@@ -23,6 +25,7 @@ Console.WriteLine();
 
 var albums = await synology.Photo.GetSharedAlbums();
 var photos = await synology.Photo.GetPhotosFromAlbum(albums.First());
+var cameras = await synology.SurveillanceStation.GetCameras();
 
 Console.WriteLine(await synology.Authentication.Logout());
 Console.WriteLine($"Logged in: {synology.Authentication.IsAuthenticated}");

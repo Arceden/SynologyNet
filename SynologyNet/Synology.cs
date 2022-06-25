@@ -9,20 +9,18 @@ namespace SynologyNet
 {
     public class Synology
     {
-        private SynologyCredentials Credentials { get; set; }
-
         public Synology(string host, string username, string password)
         {
             BaseRepository.BaseAddress = host;
             BaseRepository.RequestMethods = AssemblyHelper.GetMethodsWithCustomAttributes(typeof(RequestAttribute));
 
-            Credentials = new SynologyCredentials
+            var credentials = new SynologyCredentials
             {
                 Username = username,
                 Password = password
             };
 
-            Authentication = new AuthenticationService(Credentials);
+            Authentication = new AuthenticationService(credentials);
             General = new GeneralService();
             Photo = new PhotoService();
             FileStation = new FileStationService();
