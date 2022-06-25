@@ -28,7 +28,19 @@ namespace SynologyNet.Exceptions
         [Display(Name = "Session interrupted by duplicate login")]
         SessionInterrupted = 107,
 
+        [Display(Name = "Missing required parameters")]
+        MissingParameters = 114,
+
+        [Display(Name = "Unknown internal error")]
+        UnknownInternalError = 117,
+
         [Display(Name = "SID not found")]
-        SidNotFound = 119
+        SidNotFound = 119,
+
+        [Display(Name = "Invalid parameter")]
+        InvalidParameter = 120,
+
+        [Display(Name = "Insufficient application privilege")]
+        ApplicationPrivelege = 160
     }
 }

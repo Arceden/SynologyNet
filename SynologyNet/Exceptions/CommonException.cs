@@ -2,7 +2,7 @@
 
 namespace SynologyNet.Exceptions
 {
-    internal class CommonException : Exception
+    internal class CommonException : SynologyException
     {
         internal CommonException()
         { }
