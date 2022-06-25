@@ -7,7 +7,7 @@ namespace SynologyNet.Services
 {
     public class GeneralService : IGeneralService
     {
-        private InformationRepository Repository { get; } 
+        private InformationRepository Repository { get; }
 
         public GeneralService()
             => Repository = new InformationRepository();

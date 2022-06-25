@@ -29,7 +29,7 @@ namespace SynologyNet.Services
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data.List; 
+            return response.Data.List;
         }
 
         public async Task<IEnumerable<Album>> GetSharedAlbums()

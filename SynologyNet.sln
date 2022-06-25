@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynologyNet", "SynologyNet\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynologyConsole", "SynologyConsole\SynologyConsole.csproj", "{44D4ECB9-52D0-425B-96D6-76599F5E6D89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynologyNetTest", "SynologyNetTest\SynologyNetTest.csproj", "{9D7E526D-1497-4A62-9EF8-62B416C4A693}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{44D4ECB9-52D0-425B-96D6-76599F5E6D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44D4ECB9-52D0-425B-96D6-76599F5E6D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44D4ECB9-52D0-425B-96D6-76599F5E6D89}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D7E526D-1497-4A62-9EF8-62B416C4A693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D7E526D-1497-4A62-9EF8-62B416C4A693}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D7E526D-1497-4A62-9EF8-62B416C4A693}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D7E526D-1497-4A62-9EF8-62B416C4A693}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

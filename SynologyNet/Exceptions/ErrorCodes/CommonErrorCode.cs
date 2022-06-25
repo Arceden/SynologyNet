@@ -15,7 +15,7 @@ namespace SynologyNet.Exceptions
 
         [Display(Name = "The requested method does not exist")]
         MethodNotFound = 103,
-        
+
         [Display(Name = "The requested version does not support the functionality")]
         VersionMismatch = 104,
 

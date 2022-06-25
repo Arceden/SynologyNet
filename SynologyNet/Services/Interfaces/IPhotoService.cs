@@ -1,5 +1,4 @@
-﻿using SynologyNet.Models;
-using SynologyNet.Models.Photo;
+﻿using SynologyNet.Models.Photo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

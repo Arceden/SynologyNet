@@ -2,7 +2,7 @@
 
 namespace SynologyNet.Exceptions
 {
-    internal class AuthenticationException: Exception
+    internal class AuthenticationException : Exception
     {
         internal AuthenticationException()
         { }
