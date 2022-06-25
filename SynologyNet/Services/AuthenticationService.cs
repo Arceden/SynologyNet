@@ -1,15 +1,16 @@
-﻿using SynologyNet.Models;
+﻿using SynologyNet.Exceptions;
+using SynologyNet.Helpers;
+using SynologyNet.Models;
 using SynologyNet.Repository;
 using System;
 using System.Threading.Tasks;
 
 namespace SynologyNet.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : BaseService, IAuthenticationService
     {
         private AuthenticationRepository Repository { get; }
         private SynologyCredentials Credentials { get; }
-        private string Key { get; set; }
 
         internal AuthenticationService(SynologyCredentials credentials)
         {
@@ -17,67 +18,28 @@ namespace SynologyNet.Services
             Credentials = credentials;
         }
 
-        public bool IsAuthenticated => Key != null;
+        public bool IsAuthenticated => KeyHelper.HasSession();
 
-        public async Task<bool> Login()
+        public async Task<bool> Login(string session = null)
         {
-            var response = await Repository.Login(Credentials);
-            CheckErrorCode(response);
+            var response = await Repository.Login(Credentials, session: session);
+            CheckErrorCode<AuthenticationErrorCode>(response);
 
             if (response.Success && response.Data.SID != null)
-                Key = response.Data.SID;
+                KeyHelper.AddSession(response.Data.SID, session: session);
 
             return response.Success && response.Data.SID != null;
         }
 
-        public async Task<bool> Logout()
+        public async Task<bool> Logout(string session = null)
         {
-            var response = await Repository.Logout();
-            CheckErrorCode(response);
+            var response = await Repository.Logout(session);
+            CheckErrorCode<AuthenticationErrorCode>(response);
 
             if (response.Success)
-                Key = null;
+                KeyHelper.ClearSession(session);
 
             return response.Success;
         }
-
-        private static void CheckErrorCode(BaseResponse response)
-        {
-            if (response.Error == null)
-                return;
-
-            switch ((AuthenticationErrorCode)response.Error.Code)
-            {
-                case AuthenticationErrorCode.IncorrectCredentials:
-                    throw new AuthenticationException("No such account or incorrect password");
-                case AuthenticationErrorCode.AccountDisabled:
-                    throw new AuthenticationException("Account disabled");
-                case AuthenticationErrorCode.PermissionDenied:
-                    throw new AuthenticationException("Permission denied");
-                case AuthenticationErrorCode.TwoFactorAuthenticationRequired:
-                    throw new AuthenticationException("2-step verification code required");
-                case AuthenticationErrorCode.TwoFactorAuthenticationFailed:
-                    throw new AuthenticationException("Failed to authenticate 2-step verification code");
-            }
-        }
     }
-
-    internal enum AuthenticationErrorCode
-    {
-        IncorrectCredentials = 400,
-        AccountDisabled = 401,
-        PermissionDenied = 402,
-        TwoFactorAuthenticationRequired = 403,
-        TwoFactorAuthenticationFailed = 404,
-    }
-
-    internal class AuthenticationException : Exception
-    {
-        public AuthenticationException()
-        { }
-
-        public AuthenticationException(string message) : base(message)
-        { }
-    }
-
 }

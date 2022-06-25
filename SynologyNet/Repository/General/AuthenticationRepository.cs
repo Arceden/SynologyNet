@@ -19,12 +19,7 @@ namespace SynologyNet.Repository
             if (session != null)
                 request.AddParameter("session", session);
 
-            var result = await _client.PostAsync<AuthenticationResponse>(request);
-
-            if (result.Success)
-                apiKey = result.Data.SID;
-
-            return result;
+            return await _client.PostAsync<AuthenticationResponse>(request);
         }
 
         [Request(Method = "logout", Version = 3)]
@@ -35,12 +30,7 @@ namespace SynologyNet.Repository
             if (session != null)
                 request.AddParameter("session", session);
 
-            var result = await _client.PostAsync<AuthenticationResponse>(PrepareRequest());
-
-            if (result.Success)
-                apiKey = null;
-
-            return result;
+            return await _client.PostAsync<AuthenticationResponse>(PrepareRequest());
         }
     }
 }

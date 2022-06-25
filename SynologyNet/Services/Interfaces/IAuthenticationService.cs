@@ -15,13 +15,15 @@ namespace SynologyNet.Services
         /// <summary>
         /// Uses the provided credentials to authenticate the user
         /// </summary>
+        /// <param name="session">Session to login to</param>
         /// <returns>true if user was authenticated successfully</returns>
-        Task<bool> Login();
+        Task<bool> Login(string session = null);
 
         /// <summary>
         /// Logs the user out of the synology system
         /// </summary>
+        /// <param name="session">Session to log out from</param>
         /// <returns>true if user was logged out successfully</returns>
-        Task<bool> Logout();
+        Task<bool> Logout(string session = null);
     }
 }

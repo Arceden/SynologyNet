@@ -23,11 +23,16 @@ namespace SynologyNet
             };
 
             Authentication = new AuthenticationService(Credentials);
+            General = new GeneralService();
+            Photo = new PhotoService();
+            FileStation = new FileStationService();
+            SurveillanceStation = new SurveillanceStationService();
         }
 
         public IAuthenticationService Authentication { get; }
-        public IPhotoService Photo { get; } = new PhotoService();
-        public IFileStationService FileStation { get; } = new FileStationService();
-        public ISurveillanceStationService SurveillanceStation { get; } = new SurveillanceStationService();
+        public IGeneralService General { get; }
+        public IPhotoService Photo { get; }
+        public IFileStationService FileStation { get; }
+        public ISurveillanceStationService SurveillanceStation { get; }
     }
 }

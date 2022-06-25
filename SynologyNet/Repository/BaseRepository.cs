@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
+using SynologyNet.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,8 +12,7 @@ namespace SynologyNet.Repository
     public class BaseRepository
     {
         protected readonly RestClient _client;
-        protected SynologyRepositoryAttribute _repository = null;
-        protected static string apiKey = null;
+        protected readonly SynologyRepositoryAttribute _repository;
 
         public static IEnumerable<MethodInfo> RequestMethods { get; set; }
         public static string BaseAddress { get; set; }
@@ -50,7 +50,7 @@ namespace SynologyNet.Repository
 
         private RestRequest AddAuthentication(RestRequest request)
         {
-            request.AddParameter("_sid", apiKey);
+            request.AddParameter("_sid", KeyHelper.GetSession().Sid);
             return request;
         }
     }
