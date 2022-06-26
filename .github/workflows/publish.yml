@@ -1,8 +1,9 @@
 name: Publish nuget package
+
 on:
   push:
-    branches:
-      - main # Default release branch, may also be named 'master' or 'develop'
+    branches: [ "master" ]
+
 jobs:
   publish:
     name: build, pack & publish
