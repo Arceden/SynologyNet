@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SynologyNet.Services
 {
-    public class PersonalPhotoService : BaseService, IPersonalPhotoService
+    public class PhotoStationPersonalService : BaseService, IPhotoStationPersonalService
     {
         private PersonalPhotoRepository Repository { get; }
 
-        public PersonalPhotoService()
+        public PhotoStationPersonalService()
             => Repository = new PersonalPhotoRepository();
 
         public async Task<IEnumerable<Folder>> GetFolders()

@@ -30,7 +30,6 @@ var albums = await photoStation.GetAlbums();
 var photos = await photoStation.GetAlbumPhotos(albums.First());
 var photoFile = await photoStation.DownloadPhoto(photos.First().Id);
 
-
 // Surveillance
 var cameras = await synology.SurveillanceStation.GetCameras();
 var liveViewPaths = await synology.SurveillanceStation.GetLiveViewPaths();

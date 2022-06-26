@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SynologyNet.Services.Interfaces
 {
-    public interface IPersonalPhotoService
+    public interface IPhotoStationPersonalService
     {
         /// <summary>
         /// Get list of recently added photos

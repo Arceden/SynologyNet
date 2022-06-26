@@ -1,6 +1,6 @@
 ﻿namespace SynologyNet.Services.Interfaces
 {
-    public interface ISharedPhotoService
+    public interface IPhotoStationSharedService
     {
     }
 }
