@@ -10,9 +10,15 @@ var synology = new Synology(host, username, password);
 // Login
 await synology.Authentication.Login()
 
-// Get shared albums
-var albums = await synology.Photo.GetSharedAlbums();
+// Synology Photo / Personal Space
+var photoStation = synology.PhotoStation.Personal;
+var sharedAlbums = await photoStation.GetSharedAlbums();
+var sharedPhotos = await photoStation.GetAlbumPhotos(sharedAlbums.First());
 
-// Get camera objects
+// Synology Surveillance Station
 var cameras = await synology.SurveillanceStation.GetCameras();
+var liveViewPaths = await synology.SurveillanceStation.GetLiveViewPaths();
+
+// Logout
+await synology.Authentication.Logout();
 ```

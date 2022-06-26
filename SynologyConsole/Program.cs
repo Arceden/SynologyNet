@@ -33,6 +33,7 @@ var photoFile = await photoStation.DownloadPhoto(photos.First().Id);
 
 // Surveillance
 var cameras = await synology.SurveillanceStation.GetCameras();
+var liveViewPaths = await synology.SurveillanceStation.GetLiveViewPaths();
 
 // Logout
 await synology.Authentication.Logout();
