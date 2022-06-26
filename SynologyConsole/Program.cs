@@ -21,6 +21,7 @@ await synology.Authentication.Login();
 
 // Photos
 var photoStation = synology.PhotoStation.Personal;
+var folders = await photoStation.GetFolders();
 var recentlyAddedPhotos = await photoStation.GetRecentlyAddedPhotos();
 var sharedAlbums = await photoStation.GetSharedAlbums();
 var sharedPhotos = await photoStation.GetAlbumPhotos(sharedAlbums.First());

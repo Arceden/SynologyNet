@@ -14,9 +14,13 @@ namespace SynologyNet.Services
         public PersonalPhotoService()
             => Repository = new PersonalPhotoRepository();
 
-        public Task<IEnumerable<Folder>> GetFolders()
+        public async Task<IEnumerable<Folder>> GetFolders()
         {
-            throw new System.NotImplementedException();
+            var response = await Repository.GetFolders();
+
+            CheckErrorCode(response);
+
+            return response.Data.List;
         }
 
         public async Task<IEnumerable<Album>> GetAlbums()

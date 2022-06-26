@@ -10,18 +10,18 @@ namespace SynologyNet.Repository
     [SynologyRepository(DefaultPath = "entry.cgi", RequiresAuthentication = true)]
     public class PersonalPhotoRepository : BaseRepository
     {
-        [Request(Api = "SYNO.Foto.Browse.RecentlyAdded", Method = "list", Version = 3)]
-        public async Task<BaseDataResponse<ListObject<Photo>>> GetRecentlyAddedPhotos(int offset = 0, int limit = 100)
+        [Request(Api = "SYNO.Foto.Browse.Folder", Method = "list")]
+        public async Task<BaseDataResponse<ListObject<Folder>>> GetFolders(int offset = 0, int limit = 100)
         {
             var request = PrepareRequest();
             request.AddParameter("offset", offset);
             request.AddParameter("limit", limit);
 
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Folder>>>(request);
         }
 
-        [Request(Api = "SYNO.Foto.Sharing.Misc", Method = "list_shared_with_me_album", Version = 1)]
-        public async Task<BaseDataResponse<ListObject<Album>>> GetSharedAlbums(int offset = 0, int limit = 100)
+        [Request(Api = "SYNO.Foto.Browse.Album", Method = "list")]
+        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(int offset = 0, int limit = 100)
         {
             var request = PrepareRequest();
             request.AddParameter("offset", offset);
@@ -30,8 +30,8 @@ namespace SynologyNet.Repository
             return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
         }
 
-        [Request(Api = "SYNO.Foto.Browse.Album", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(int offset = 0, int limit = 100)
+        [Request(Api = "SYNO.Foto.Sharing.Misc", Method = "list_shared_with_me_album", Version = 1)]
+        public async Task<BaseDataResponse<ListObject<Album>>> GetSharedAlbums(int offset = 0, int limit = 100)
         {
             var request = PrepareRequest();
             request.AddParameter("offset", offset);
@@ -48,6 +48,16 @@ namespace SynologyNet.Repository
             request.AddParameter("limit", limit);
             request.AddParameter("type", "photo");
             request.AddParameter("passphrase", passphrase);
+
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+        }
+
+        [Request(Api = "SYNO.Foto.Browse.RecentlyAdded", Method = "list", Version = 3)]
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetRecentlyAddedPhotos(int offset = 0, int limit = 100)
+        {
+            var request = PrepareRequest();
+            request.AddParameter("offset", offset);
+            request.AddParameter("limit", limit);
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
         }
