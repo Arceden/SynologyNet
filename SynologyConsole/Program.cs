@@ -13,22 +13,28 @@ var username = config["Synology:Username"];
 var password = config["Synology:Password"];
 var synology = new Synology(host, username, password);
 
+// General
 var info = await synology.General.GetApiInformation();
 
-Console.WriteLine($"Logged in: {synology.Authentication.IsAuthenticated}");
-Console.WriteLine(await synology.Authentication.Login());
-Console.WriteLine($"Logged in: {synology.Authentication.IsAuthenticated}");
+// Login
+await synology.Authentication.Login();
 
-Console.WriteLine("Recently added photos");
-Console.WriteLine(await synology.Photo.GetRecentlyAddedPhotos());
-Console.WriteLine();
+// Photos
+var photoStation = synology.PhotoStation.Personal;
+var recentlyAddedPhotos = await photoStation.GetRecentlyAddedPhotos();
+var sharedAlbums = await photoStation.GetSharedAlbums();
+var sharedPhotos = await photoStation.GetAlbumPhotos(sharedAlbums.First());
+var sharedPhotoFile = await photoStation.DownloadPhoto(sharedPhotos.First().Id, sharedAlbums.First().Passphrase);
+var albums = await photoStation.GetAlbums();
+var photos = await photoStation.GetAlbumPhotos(albums.First());
+var photoFile = await photoStation.DownloadPhoto(photos.First().Id);
 
-var albums = await synology.Photo.GetSharedAlbums();
-var photos = await synology.Photo.GetPhotosFromAlbum(albums.First());
+
+// Surveillance
 var cameras = await synology.SurveillanceStation.GetCameras();
 
-Console.WriteLine(await synology.Authentication.Logout());
-Console.WriteLine($"Logged in: {synology.Authentication.IsAuthenticated}");
+// Logout
+await synology.Authentication.Logout();
 
 Console.WriteLine("Waiting for user input..");
 Console.ReadKey();

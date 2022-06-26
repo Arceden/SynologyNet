@@ -1,4 +1,4 @@
-﻿using SynologyNet.Models;
+﻿using SynologyNet.Models.Responses;
 using SynologyNet.Repository;
 using SynologyNet.Services.Interfaces;
 using System.Threading.Tasks;

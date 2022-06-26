@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SynologyNet.Models
+namespace SynologyNet.Models.Responses
 {
     public class AuthenticationResponse : BaseDataResponse<AuthenticationData>
     { }

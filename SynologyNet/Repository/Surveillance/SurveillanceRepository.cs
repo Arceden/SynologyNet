@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
-using SynologyNet.Models.Surveillance;
+using SynologyNet.Models.Responses.Surveillance;
 using System;
 using System.Threading.Tasks;
 

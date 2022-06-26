@@ -1,4 +1,4 @@
-﻿namespace SynologyNet.Models
+﻿namespace SynologyNet.Models.Responses
 {
     public class Error
     {

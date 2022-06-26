@@ -1,4 +1,4 @@
-﻿using SynologyNet.Models.Surveillance;
+﻿using SynologyNet.Models.Responses.Surveillance;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

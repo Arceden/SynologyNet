@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace SynologyNet.Models.Photo
+namespace SynologyNet.Models.Responses
 {
     public class ListObject<T>
     {

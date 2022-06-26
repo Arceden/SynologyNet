@@ -22,14 +22,14 @@ namespace SynologyNet
 
             Authentication = new AuthenticationService(credentials);
             General = new GeneralService();
-            Photo = new PhotoService();
+            PhotoStation = new PhotoService();
             FileStation = new FileStationService();
             SurveillanceStation = new SurveillanceStationService();
         }
 
         public IAuthenticationService Authentication { get; }
         public IGeneralService General { get; }
-        public IPhotoService Photo { get; }
+        public IPhotoService PhotoStation { get; }
         public IFileStationService FileStation { get; }
         public ISurveillanceStationService SurveillanceStation { get; }
     }

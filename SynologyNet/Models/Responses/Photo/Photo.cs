@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SynologyNet.Models.Photo
+namespace SynologyNet.Models.Responses.Photo
 {
     public class Photo
     {

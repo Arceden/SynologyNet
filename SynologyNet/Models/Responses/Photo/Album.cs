@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SynologyNet.Models.Photo
+namespace SynologyNet.Models.Responses.Photo
 {
     public class Album
     {
@@ -18,7 +18,6 @@ namespace SynologyNet.Models.Photo
 
         [JsonPropertyName("type")]
         public string Type { get; set; }
-
 
         [JsonPropertyName("sort_by")]
         public string SortBy { get; set; }

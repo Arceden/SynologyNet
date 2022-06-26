@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SynologyNet.Exceptions
+﻿namespace SynologyNet.Exceptions
 {
     internal class AuthenticationException : SynologyException
     {

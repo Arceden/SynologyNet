@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace SynologyNet.Models.Surveillance
+namespace SynologyNet.Models.Responses.Surveillance
 {
     public class Camera
     {

@@ -1,5 +1,5 @@
 ﻿using SynologyNet.Exceptions;
-using SynologyNet.Models;
+using SynologyNet.Models.Responses;
 using System;
 
 namespace SynologyNet.Services

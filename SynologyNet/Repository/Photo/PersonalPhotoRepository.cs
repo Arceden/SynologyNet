@@ -1,13 +1,14 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
-using SynologyNet.Models;
-using SynologyNet.Models.Photo;
+using SynologyNet.Helpers;
+using SynologyNet.Models.Responses;
+using SynologyNet.Models.Responses.Photo;
 using System.Threading.Tasks;
 
 namespace SynologyNet.Repository
 {
     [SynologyRepository(DefaultPath = "entry.cgi", RequiresAuthentication = true)]
-    public class PhotoRepository : BaseRepository
+    public class PersonalPhotoRepository : BaseRepository
     {
         [Request(Api = "SYNO.Foto.Browse.RecentlyAdded", Method = "list", Version = 3)]
         public async Task<BaseDataResponse<ListObject<Photo>>> GetRecentlyAddedPhotos(int offset = 0, int limit = 100)
@@ -29,8 +30,18 @@ namespace SynologyNet.Repository
             return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
         }
 
+        [Request(Api = "SYNO.Foto.Browse.Album", Method = "list")]
+        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(int offset = 0, int limit = 100)
+        {
+            var request = PrepareRequest();
+            request.AddParameter("offset", offset);
+            request.AddParameter("limit", limit);
+
+            return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
+        }
+
         [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Photo>>> GetPhotosFromAlbum(int offset = 0, int limit = 100, string passphrase = null)
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(int offset = 0, int limit = 100, string passphrase = null)
         {
             var request = PrepareRequest();
             request.AddParameter("offset", offset);
@@ -45,8 +56,8 @@ namespace SynologyNet.Repository
         public async Task<byte[]> DownloadPhoto(int photoId, string passphrase)
         {
             var request = PrepareRequest();
-            request.AddParameter("passphrase", passphrase);
             request.AddParameter("unit_id", $"[{photoId}]");
+            request.AddParameterIfNotNull("passphrase", passphrase);
 
             return await _client.DownloadDataAsync(request);
         }

@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
 using SynologyNet.Models;
+using SynologyNet.Models.Responses;
 using System.Threading.Tasks;
 
 namespace SynologyNet.Repository

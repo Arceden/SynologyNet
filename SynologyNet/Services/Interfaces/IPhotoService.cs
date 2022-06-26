@@ -1,43 +1,28 @@
-﻿using SynologyNet.Models.Photo;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace SynologyNet.Services.Interfaces
 {
     public interface IPhotoService
     {
         /// <summary>
-        /// Get list of recently added photos
+        /// Access photos and folders within the Personal Space of the Synology Photos API
         /// </summary>
-        /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetRecentlyAddedPhotos();
+        IPersonalPhotoService Personal { get; }
 
         /// <summary>
-        /// Get list of shared albums with the current user
+        /// Access photos and folders within the Shared Space of the Synology Photos API
         /// </summary>
-        /// <returns>List of shared albums</returns>
-        Task<IEnumerable<Album>> GetSharedAlbums();
+        ISharedPhotoService Shared { get; }
+    }
 
-        /// <summary>
-        /// Get list of photos from a specified album
-        /// </summary>
-        /// <param name="album">Album to get photos from</param>
-        /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetPhotosFromAlbum(Album album);
+    public class PhotoService : IPhotoService
+    {
+        public IPersonalPhotoService Personal { get; }
+        public ISharedPhotoService Shared => throw new NotImplementedException();
 
-        /// <summary>
-        /// Download photo as byte array
-        /// </summary>
-        /// <param name="photoId">Photo identifier</param>
-        /// <returns>Photo as byte array</returns>
-        Task<byte[]> DownloadPhoto(int photoId);
-
-        /// <summary>
-        /// Download photo from shared album as byte array
-        /// </summary>
-        /// <param name="photoId">Photo identifier</param>
-        /// <param name="passphrase">Shared album passphrase</param>
-        /// <returns>Photo as byte array</returns>
-        Task<byte[]> DownloadPhoto(int photoId, string passphrase);
+        public PhotoService()
+        {
+            Personal = new PersonalPhotoService();
+        }
     }
 }
