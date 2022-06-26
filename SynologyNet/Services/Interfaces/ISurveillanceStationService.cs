@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace SynologyNet.Services.Interfaces
 {
+    /// <summary>
+    /// SurveillanceStationService interface
+    /// </summary>
     public interface ISurveillanceStationService
     {
         /// <summary>

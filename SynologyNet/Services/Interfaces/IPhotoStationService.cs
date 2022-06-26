@@ -1,5 +1,8 @@
 ﻿namespace SynologyNet.Services.Interfaces
 {
+    /// <summary>
+    /// PhotoStationService interface
+    /// </summary>
     public interface IPhotoStationService
     {
         /// <summary>

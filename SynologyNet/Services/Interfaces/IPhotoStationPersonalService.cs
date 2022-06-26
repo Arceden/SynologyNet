@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace SynologyNet.Services.Interfaces
 {
+    /// <summary>
+    /// PersonalSpace for PhotoStation interface
+    /// </summary>
     public interface IPhotoStationPersonalService
     {
         /// <summary>
