@@ -24,16 +24,15 @@ namespace SynologyNet.Services
             var response = await Repository.Login(Credentials, session: session);
             CheckErrorCode<AuthenticationErrorCode>(response);
 
-            if (response.Success && response.Data.SID != null)
+            if (response.Success && response.Data.Sid != null)
             {
                 if (KeyHelper.HasSession(session))
                     KeyHelper.ClearSession(session);
 
-                KeyHelper.AddSession(response.Data.SID, session: session);
+                KeyHelper.AddSession(response.Data.Sid, session: session);
             }
 
-
-            return response.Success && response.Data.SID != null;
+            return response.Success && response.Data.Sid != null;
         }
 
         public async Task<bool> Logout(string session = null)

@@ -2,12 +2,11 @@
 
 namespace SynologyNet.Models.Responses
 {
-    public class AuthenticationResponse : BaseDataResponse<AuthenticationData>
-    { }
-
-    public class AuthenticationData
+    public class AuthenticationResponse
     {
         [JsonPropertyName("sid")]
-        public string SID { get; set; }
+        public string Sid { get; set; }
+        [JsonPropertyName("did")]
+        public string Did { get; set; }
     }
 }
