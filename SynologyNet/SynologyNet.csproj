@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,6 +10,7 @@
 	<RepositoryUrl>https://github.com/Arceden/SynologyNet</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<PackageTags>synology api dsm dotnet core</PackageTags>
+	<Version>0.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
