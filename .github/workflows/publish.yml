@@ -39,5 +39,7 @@ jobs:
         run: dotnet pack -c Release -o . SynologyNet/SynologyNet.csproj
       - name: Add Source
         run: dotnet nuget add source --username Arceden --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Arceden/index.json"
-      - name: Publish
+      - name: Publish Github
+        run: dotnet nuget push *.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+      - name: Publish Nuget
         run: dotnet nuget push *.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
