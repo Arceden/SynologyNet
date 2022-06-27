@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace SynologyNet
 {
@@ -20,6 +21,21 @@ namespace SynologyNet
                 .First()
                 .GetCustomAttribute<DisplayAttribute>()
                 .GetName();
+        }
+
+        /// <summary>
+        /// Get EnumMember value as string
+        /// </summary>
+        /// <param name="enumValue">Enum with the EnumMember Attribute</param>
+        /// <returns>Value as string</returns>
+        public static string GetValue(this Enum enumValue)
+        {
+            return enumValue
+                .GetType()
+                .GetMember(enumValue.ToString())
+                .FirstOrDefault()
+                ?.GetCustomAttribute<EnumMemberAttribute>(false)
+                ?.Value;
         }
     }
 }

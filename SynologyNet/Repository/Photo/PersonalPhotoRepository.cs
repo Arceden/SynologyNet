@@ -1,8 +1,10 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
 using SynologyNet.Helpers;
+using SynologyNet.Models.Requests.Photo;
 using SynologyNet.Models.Responses;
 using SynologyNet.Models.Responses.Photo;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SynologyNet.Repository
@@ -11,31 +13,46 @@ namespace SynologyNet.Repository
     public class PersonalPhotoRepository : BaseRepository
     {
         [Request(Api = "SYNO.Foto.Browse.Folder", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Folder>>> GetFolders(int offset = 0, int limit = 100)
+        public async Task<BaseDataResponse<ListObject<Folder>>> GetFolders(CollectionFilter? collectionFilter = null)
         {
+            if (collectionFilter == null)
+                collectionFilter = new CollectionFilter();
+
             var request = PrepareRequest();
-            request.AddParameter("offset", offset);
-            request.AddParameter("limit", limit);
+            request.AddParameter("offset", collectionFilter.Offset);
+            request.AddParameter("limit", collectionFilter.Limit);
+            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
+            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Folder>>>(request);
         }
 
         [Request(Api = "SYNO.Foto.Browse.Album", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(int offset = 0, int limit = 100)
+        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(CollectionFilter? collectionFilter = null)
         {
+            if (collectionFilter == null)
+                collectionFilter = new CollectionFilter();
+
             var request = PrepareRequest();
-            request.AddParameter("offset", offset);
-            request.AddParameter("limit", limit);
+            request.AddParameter("offset", collectionFilter.Offset);
+            request.AddParameter("limit", collectionFilter.Limit);
+            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
+            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
         }
 
         [Request(Api = "SYNO.Foto.Sharing.Misc", Method = "list_shared_with_me_album", Version = 1)]
-        public async Task<BaseDataResponse<ListObject<Album>>> GetSharedAlbums(int offset = 0, int limit = 100)
+        public async Task<BaseDataResponse<ListObject<Album>>> GetSharedAlbums(CollectionFilter? collectionFilter = null)
         {
+            if (collectionFilter == null)
+                collectionFilter= new CollectionFilter();
+
             var request = PrepareRequest();
-            request.AddParameter("offset", offset);
-            request.AddParameter("limit", limit);
+            request.AddParameter("offset", collectionFilter.Offset);
+            request.AddParameter("limit", collectionFilter.Limit);
+            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
+            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
         }

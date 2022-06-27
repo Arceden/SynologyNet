@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SynologyNet;
+using SynologyNet.Models.Requests.Photo;
 using System;
 using System.Linq;
+using System.Text.Json;
 
 var config = new ConfigurationBuilder()
     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)

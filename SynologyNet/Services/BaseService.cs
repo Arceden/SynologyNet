@@ -22,6 +22,9 @@ namespace SynologyNet.Services
 
             if (typeof(TErrorCode) != typeof(CommonErrorCode))
                 CheckErrorCode<CommonErrorCode>(response);
+
+            else
+                throw new SynologyException(CommonErrorCode.Unknown.GetDisplayName());
         }
     }
 }
