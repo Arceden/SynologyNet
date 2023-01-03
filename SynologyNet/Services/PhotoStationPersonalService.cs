@@ -1,4 +1,5 @@
 ﻿using SynologyNet.Exceptions;
+using SynologyNet.Models.Requests.Photo;
 using SynologyNet.Models.Responses.Photo;
 using SynologyNet.Repository;
 using SynologyNet.Services.Interfaces;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SynologyNet.Services
 {
-    public class PhotoStationPersonalService : BaseService, IPhotoStationPersonalService
+    class PhotoStationPersonalService : BaseService, IPhotoStationPersonalService
     {
         private PersonalPhotoRepository Repository { get; }
 
@@ -23,9 +24,9 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
-        public async Task<IEnumerable<Album>> GetAlbums()
+        public async Task<IEnumerable<Album>> GetAlbums(CollectionFilter? filter = null)
         {
-            var response = await Repository.GetAlbums();
+            var response = await Repository.GetAlbums(filter);
 
             CheckErrorCode(response);
 
@@ -41,7 +42,7 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
-        public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album)
+        public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, CollectionFilter? filter = null)
         {
             var response = await Repository.GetAlbumPhotos(passphrase: album.Passphrase);
 

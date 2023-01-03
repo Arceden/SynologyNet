@@ -3,6 +3,12 @@
     public class Error
     {
         public int Code { get; set; }
-        public string Errors { get; set; }
+        public ErrorContent Errors { get; set; }
+    }
+
+    public class ErrorContent
+    {
+        public string Name { get; set; }
+        public string Reason { get; set; }
     }
 }

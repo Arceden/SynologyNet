@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SynologyNet.Repository
 {
     [SynologyRepository(DefaultPath = "entry.cgi")]
-    public class SurveillanceRepository : BaseRepository
+    class SurveillanceRepository : BaseRepository
     {
         [Request(Api = "SYNO.SurveillanceStation.Info", Method = "GetInfo", Version = 8)]
         public async Task<SurveillanceInformation> GetInfo()

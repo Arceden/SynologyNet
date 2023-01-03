@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace SynologyNet.Models.Requests.Photo
@@ -18,8 +17,11 @@ namespace SynologyNet.Models.Requests.Photo
         /// <summary>
         /// Limit the amount of items to return
         /// </summary>
+        /// <remarks>
+        /// The API can only accept a value between 0 and 5000
+        /// </remarks>
         [JsonPropertyName("limit")]
-        public int Limit { get; set; } = 100;
+        public int Limit { get; set; } = 5000;
 
         /// <summary>
         /// Sort by specific piece of file information

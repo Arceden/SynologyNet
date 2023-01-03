@@ -1,4 +1,5 @@
-﻿using SynologyNet.Models.Responses.Photo;
+﻿using SynologyNet.Models.Requests.Photo;
+using SynologyNet.Models.Responses.Photo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,15 +25,17 @@ namespace SynologyNet.Services.Interfaces
         /// <summary>
         /// Get list of albums made by the current user
         /// </summary>
+        /// <param name="filter">Filter options</param>
         /// <returns>List of albums</returns>
-        Task<IEnumerable<Album>> GetAlbums();
+        Task<IEnumerable<Album>> GetAlbums(CollectionFilter? filter = null);
 
         /// <summary>
         /// Get list of photos from a specified album
         /// </summary>
         /// <param name="album">Album to get photos from</param>
+        /// <param name="filter">Filter options</param>
         /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetAlbumPhotos(Album album);
+        Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, CollectionFilter? filter = null);
 
         /// <summary>
         /// Get list of folders

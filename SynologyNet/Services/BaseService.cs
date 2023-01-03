@@ -18,13 +18,13 @@ namespace SynologyNet.Services
             var error = (TErrorCode)(object)response.Error.Code;
 
             if (Enum.IsDefined(typeof(TErrorCode), error))
-                throw new SynologyException(error.GetDisplayName());
+                throw new SynologyException($"{error.GetDisplayName()} - {response.Error.Errors.Name} {response.Error.Errors.Reason}");
 
             if (typeof(TErrorCode) != typeof(CommonErrorCode))
                 CheckErrorCode<CommonErrorCode>(response);
 
             else
-                throw new SynologyException(CommonErrorCode.Unknown.GetDisplayName());
+                throw new SynologyException($"{CommonErrorCode.Unknown.GetDisplayName()} - {response.Error.Errors.Name} {response.Error.Errors.Reason}");
         }
     }
 }
