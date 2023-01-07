@@ -42,6 +42,15 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
+        public async Task<IEnumerable<Photo>> GetPhotos(CollectionFilter? filter = null)
+        {
+            var response = await Repository.GetPhotos(filter);
+
+            CheckErrorCode<PhotoErrorCode>(response);
+
+            return response.Data.List;
+        }
+
         public async Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album)
         {
             var response = await Repository.GetSharedAlbumPhotos(album);
@@ -71,12 +80,20 @@ namespace SynologyNet.Services
 
         public async Task<byte[]> DownloadPhoto(int photoId)
         {
-            return await Repository.DownloadPhoto(photoId, null);
+            var response = await Repository.DownloadPhoto(photoId, null);
+
+            CheckErrorCode<PhotoErrorCode>(response);
+
+            return response.Data;
         }
 
         public async Task<byte[]> DownloadPhoto(int photoId, string passphrase)
         {
-            return await Repository.DownloadPhoto(photoId, passphrase);
+            var response = await Repository.DownloadPhoto(photoId, passphrase);
+
+            CheckErrorCode<PhotoErrorCode>(response);
+
+            return response.Data;
         }
     }
 }

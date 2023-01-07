@@ -11,25 +11,6 @@ namespace SynologyNet.Services.Interfaces
     public interface IPhotoStationPersonalService
     {
         /// <summary>
-        /// Get list of recently added photos
-        /// </summary>
-        /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetRecentlyAddedPhotos();
-
-        /// <summary>
-        /// Get list of shared albums with the current user
-        /// </summary>
-        /// <returns>List of shared albums</returns>
-        Task<IEnumerable<Album>> GetSharedAlbums();
-
-        /// <summary>
-        /// Get list of shared album photos with the current user
-        /// </summary>
-        /// <param name="album">Shared album</param>
-        /// <returns>List of shared <seealso cref="Photo"/> within a <paramref name="album"/></returns>
-        Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album);
-
-        /// <summary>
         /// Get list of albums made by the current user
         /// </summary>
         /// <param name="filter">Filter options</param>
@@ -37,12 +18,39 @@ namespace SynologyNet.Services.Interfaces
         Task<IEnumerable<Album>> GetAlbums(CollectionFilter? filter = null);
 
         /// <summary>
-        /// Get list of photos from a specified album
+        /// Get list of shared albums with the current user
         /// </summary>
-        /// <param name="album">Album to get photos from</param>
+        /// <returns>List of shared albums</returns>
+        Task<IEnumerable<Album>> GetSharedAlbums();
+
+
+        /// <summary>
+        /// Get a list of photos from the current user
+        /// </summary>
+        /// <param name="filter">Filter options</param>
+        /// <returns>List of photos</returns>
+        Task<IEnumerable<Photo>> GetPhotos(CollectionFilter? filter = null);
+
+        /// <summary>
+        /// Get list of recently added photos
+        /// </summary>
+        /// <returns>List of photos</returns>
+        Task<IEnumerable<Photo>> GetRecentlyAddedPhotos();
+
+        /// <summary>
+        /// Get list of photos from a specified <seealso cref="Album"/>
+        /// </summary>
+        /// <param name="album">Source <seealso cref="Album"/></param>
         /// <param name="filter">Filter options</param>
         /// <returns>List of photos</returns>
         Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, CollectionFilter? filter = null);
+
+        /// <summary>
+        /// Get list of shared <seealso cref="Album"/> photos with the current user
+        /// </summary>
+        /// <param name="album">Shared <seealso cref="Album"/></param>
+        /// <returns>List of shared <seealso cref="Photo"/> within a <paramref name="album"/></returns>
+        Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album);
 
         /// <summary>
         /// Get list of folders
@@ -51,17 +59,17 @@ namespace SynologyNet.Services.Interfaces
         Task<IEnumerable<Folder>> GetFolders();
 
         /// <summary>
-        /// Download photo as byte array
+        /// Download <seealso cref="Photo"/> as byte array
         /// </summary>
-        /// <param name="photoId">Photo identifier</param>
+        /// <param name="photoId"><seealso cref="Photo"/> identifier</param>
         /// <returns>Photo as byte array</returns>
         Task<byte[]> DownloadPhoto(int photoId);
 
         /// <summary>
-        /// Download photo from shared album as byte array
+        /// Download <seealso cref="Photo"/> from shared <seealso cref="Album"/> as byte array
         /// </summary>
-        /// <param name="photoId">Photo identifier</param>
-        /// <param name="passphrase">Shared album passphrase</param>
+        /// <param name="photoId"><seealso cref="Photo"/> identifier</param>
+        /// <param name="passphrase">Shared <seealso cref="Album"/> passphrase</param>
         /// <returns>Photo as byte array</returns>
         Task<byte[]> DownloadPhoto(int photoId, string passphrase);
     }

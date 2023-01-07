@@ -2,10 +2,10 @@
 
 namespace SynologyNet.Models.Responses.Surveillance
 {
-    public class SurveillanceInformation : BaseDataResponse<SurveillanceInformationData>
+    public record SurveillanceInformation : BaseDataResponse<SurveillanceInformationData>
     { }
 
-    public class SurveillanceInformationData
+    public record SurveillanceInformationData
     {
         [JsonPropertyName("version")]
         public Version Version { get; set; }
@@ -29,7 +29,7 @@ namespace SynologyNet.Models.Responses.Surveillance
         public string Path { get; set; }
     }
 
-    public class Version
+    public record Version
     {
         [JsonPropertyName("major")]
         public int Major { get; set; }

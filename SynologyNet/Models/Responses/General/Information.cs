@@ -3,13 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace SynologyNet.Models.Responses
 {
-    public class InformationList : BaseResponse
+    public record InformationList : BaseResponse
     {
         [JsonPropertyName("data")]
         public Dictionary<string, Information> Data { get; set; }
     }
 
-    public class Information
+    public record Information
     {
         [JsonPropertyName("path")]
         public string Path { get; set; }

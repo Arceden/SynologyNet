@@ -4,6 +4,7 @@ using SynologyNet.Helpers;
 using SynologyNet.Models.Requests.Photo;
 using SynologyNet.Models.Responses;
 using SynologyNet.Models.Responses.Photo;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -87,6 +88,7 @@ namespace SynologyNet.Repository
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
         }
 
+        [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
         public async Task<BaseDataResponse<ListObject<Photo>>> GetPhotos(CollectionFilter? collectionFilter = null)
         {
             collectionFilter ??= new();
@@ -113,14 +115,28 @@ namespace SynologyNet.Repository
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
         }
 
+        /// <summary>
+        /// Download photo as bytearray
+        /// </summary>
+        /// <param name="photoId">Id of photo object</param>
+        /// <param name="passphrase">Album passphrase, required if photo comes from a shared album</param>
+        /// <returns>Data response object with byte array as data content</returns>
         [Request(Api = "SYNO.Foto.Download", Method = "download")]
-        public async Task<byte[]> DownloadPhoto(int photoId, string passphrase)
+        public async Task<BaseDataResponse<byte[]>> DownloadPhoto(int photoId, string? passphrase)
         {
             var request = PrepareRequest();
             request.AddParameter("unit_id", $"[{photoId}]");
             request.AddParameterIfNotNull("passphrase", passphrase);
 
-            return await _client.DownloadDataAsync(request);
+            var response = await _client.GetAsync(request);
+            var dataResponse = new BaseDataResponse<byte[]>() { Success = true };
+
+            if (response.ContentType == "application/json")
+                dataResponse = JsonSerializer.Deserialize<BaseDataResponse<byte[]>>(response?.Content ?? "") ?? new();
+            else
+                dataResponse.Data = response.RawBytes;
+
+            return dataResponse;
         }
     }
 }

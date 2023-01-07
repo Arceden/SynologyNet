@@ -2,9 +2,16 @@
 
 namespace SynologyNet.Models.Responses
 {
-    public class BaseDataResponse<T> : BaseResponse
+    /// <summary>
+    /// Base record for the data response
+    /// </summary>
+    /// <typeparam name="T">Datatype of the response content</typeparam>
+    public record BaseDataResponse<T> : BaseResponse
     {
+        /// <summary>
+        /// Requested response content
+        /// </summary>
         [JsonPropertyName("data")]
-        public T Data { get; set; }
+        public T? Data { get; set; }
     }
 }

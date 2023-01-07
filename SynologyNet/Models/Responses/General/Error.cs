@@ -1,14 +1,40 @@
-﻿namespace SynologyNet.Models.Responses
+﻿using System.Text.Json.Serialization;
+
+namespace SynologyNet.Models.Responses
 {
-    public class Error
+    /// <summary>
+    /// Base error object
+    /// </summary>
+    public record Error
     {
+        /// <summary>
+        /// Identifiable error code
+        /// </summary>
+        [JsonPropertyName("code")]
         public int Code { get; set; }
-        public ErrorContent Errors { get; set; }
+
+        /// <summary>
+        /// Error description
+        /// </summary>
+        [JsonPropertyName("errors")]
+        public ErrorContent? Errors { get; set; }
     }
 
-    public class ErrorContent
+    /// <summary>
+    /// Descriptive error object
+    /// </summary>
+    public record ErrorContent
     {
-        public string Name { get; set; }
-        public string Reason { get; set; }
+        /// <summary>
+        /// Name of the error
+        /// </summary>
+        [JsonPropertyName("name")]
+        public string? Name { get; set; }
+
+        /// <summary>
+        /// Error reasoning
+        /// </summary>
+        [JsonPropertyName("reason")]
+        public string? Reason { get; set; }
     }
 }

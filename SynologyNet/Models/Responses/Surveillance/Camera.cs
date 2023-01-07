@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SynologyNet.Models.Responses.Surveillance
 {
-    public class Camera
+    public record Camera
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -39,7 +39,7 @@ namespace SynologyNet.Models.Responses.Surveillance
         public Stream Stream3 { get; set; }
     }
 
-    public class Stream
+    public record Stream
     {
         [JsonPropertyName("bitrateCtrl")]
         public int BitrateControl { get; set; }
@@ -57,7 +57,7 @@ namespace SynologyNet.Models.Responses.Surveillance
         public string Resolution { get; set; }
     }
 
-    public class CameraListData
+    public record CameraListData
     {
         [JsonPropertyName("total")]
         public int Total { get; set; }
@@ -66,6 +66,6 @@ namespace SynologyNet.Models.Responses.Surveillance
         public IEnumerable<Camera> Cameras { get; set; }
     }
 
-    public class CameraList : BaseDataResponse<CameraListData>
+    public record CameraList : BaseDataResponse<CameraListData>
     { }
 }
