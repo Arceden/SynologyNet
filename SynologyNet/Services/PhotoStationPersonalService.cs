@@ -43,7 +43,7 @@ namespace SynologyNet.Services
 
         public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album)
         {
-            var response = await Repository.GetAlbumPhotos(passphrase: album.Passphrase);
+            var response = await Repository.GetAlbumPhotos(album);
 
             CheckErrorCode<PhotoErrorCode>(response);
 

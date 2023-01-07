@@ -15,5 +15,11 @@ namespace SynologyNet.Helpers
         {
             return value != null ? request.AddParameter(name, value) : request;
         }
+
+        /// <inheritdoc cref="AddParameterIfNotNull(RestRequest, string, string?)"/>
+        public static RestRequest AddParameterIfNotNull(this RestRequest request, string name, int? value)
+        {
+            return value != null ? request.AddParameter(name, (int) value) : request;
+        }
     }
 }

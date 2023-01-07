@@ -58,13 +58,14 @@ namespace SynologyNet.Repository
         }
 
         [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(int offset = 0, int limit = 100, string passphrase = null)
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(Album album, int offset = 0, int limit = 100)
         {
             var request = PrepareRequest();
             request.AddParameter("offset", offset);
             request.AddParameter("limit", limit);
             request.AddParameter("type", "photo");
-            request.AddParameter("passphrase", passphrase);
+            request.AddParameterIfNotNull("album_id", album.Passphrase == null || album.Passphrase == string.Empty ? album.Id : null);
+            request.AddParameterIfNotNull("passphrase", album.Passphrase == null || album.Passphrase == string.Empty ? null : album.Passphrase);
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
         }
