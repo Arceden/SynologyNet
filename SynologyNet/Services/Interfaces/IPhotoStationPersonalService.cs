@@ -23,6 +23,13 @@ namespace SynologyNet.Services.Interfaces
         Task<IEnumerable<Album>> GetSharedAlbums();
 
         /// <summary>
+        /// Get list of shared album photos with the current user
+        /// </summary>
+        /// <param name="album">Shared album</param>
+        /// <returns>List of shared <seealso cref="Photo"/> within a <paramref name="album"/></returns>
+        Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album);
+
+        /// <summary>
         /// Get list of albums made by the current user
         /// </summary>
         /// <param name="filter">Filter options</param>

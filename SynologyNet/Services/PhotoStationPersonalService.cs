@@ -42,9 +42,18 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
+        public async Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album)
+        {
+            var response = await Repository.GetSharedAlbumPhotos(album);
+
+            CheckErrorCode<PhotoErrorCode>(response);
+
+            return response.Data.List;
+        }
+
         public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, CollectionFilter? filter = null)
         {
-            var response = await Repository.GetAlbumPhotos(passphrase: album.Passphrase);
+            var response = await Repository.GetAlbumPhotos(album);
 
             CheckErrorCode<PhotoErrorCode>(response);
 

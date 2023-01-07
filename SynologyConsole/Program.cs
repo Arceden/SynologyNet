@@ -23,16 +23,33 @@ await synology.Authentication.Login();
 // Photos
 var photoStation = synology.PhotoStation.Personal;
 
-var a = (await photoStation.GetAlbums(new CollectionFilter() { Limit = 2, Offset = 0, SortDirection = SortDirectionType.Desc })).ToList();
-a.ForEach(async e =>
-    {
-        Console.WriteLine(e.Name);
+// Personal albums and photos
+Console.WriteLine("My albums");
+var albums = await photoStation.GetAlbums(new CollectionFilter() { Offset = 0, SortDirection = SortDirectionType.Desc });
+foreach(var album in albums)
+{
+    Console.WriteLine($" - {album.Name}");
 
-        var b = (await photoStation.GetAlbumPhotos(e, new CollectionFilter() { SortBy = SortByType.CreatedTime })).ToList();
-        b.ForEach(n => Console.WriteLine($"\t{n.Filename}"));
-    }
-);
+    var photos = await photoStation.GetAlbumPhotos(album);
+    
+    foreach (var photo in photos)  
+        Console.WriteLine($"\t+ {photo.Filename}");
+}
+Console.WriteLine();
 
+// Shared with me
+Console.WriteLine("Shared with me");
+var sharedAlbums = await photoStation.GetSharedAlbums();
+foreach (var album in sharedAlbums)
+{
+    Console.WriteLine($" - {album.Name} {album.Shared}");
+
+    var photos = await photoStation.GetSharedAlbumPhotos(album);
+
+    foreach (var photo in photos)
+        Console.WriteLine($"\t+ {photo.Filename}");
+}
+Console.WriteLine();
 
 
 //var folders = await photoStation.GetFolders();

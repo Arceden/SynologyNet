@@ -57,7 +57,22 @@ namespace SynologyNet.Repository
         }
 
         [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(string passphrase = null, CollectionFilter? collectionFilter = null)
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetSharedAlbumPhotos(Album album, CollectionFilter? collectionFilter = null)
+        {
+            collectionFilter ??= new();
+
+            var request = PrepareRequest();
+            request.AddParameter("offset", collectionFilter.Offset);
+            request.AddParameter("limit", collectionFilter.Limit);
+            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
+            request.AddParameter("type", "photo");
+            request.AddParameter("passphrase", album.Passphrase);
+
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+        }
+
+        [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(Album album, CollectionFilter? collectionFilter = null)
         {
             collectionFilter ??= new();
 
@@ -67,7 +82,21 @@ namespace SynologyNet.Repository
             request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
             request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
             request.AddParameter("type", "photo");
-            request.AddParameter("passphrase", passphrase);
+            request.AddParameter("album_id", album.Id);
+
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+        }
+
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetPhotos(CollectionFilter? collectionFilter = null)
+        {
+            collectionFilter ??= new();
+
+            var request = PrepareRequest();
+            request.AddParameter("offset", collectionFilter.Offset);
+            request.AddParameter("limit", collectionFilter.Limit);
+            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
+            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
+            request.AddParameter("type", "photo");
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
         }
