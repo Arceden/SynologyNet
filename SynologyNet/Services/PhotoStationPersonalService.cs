@@ -95,5 +95,15 @@ namespace SynologyNet.Services
 
             return response.Data;
         }
+
+        public Task<byte[]> DownloadPhoto(Photo photo)
+        {
+            return DownloadPhoto(photo.Id);
+        }
+
+        public Task<byte[]> DownloadPhoto(Photo photo, Album album)
+        {
+            return DownloadPhoto(photo.Id, album.Passphrase);
+        }
     }
 }

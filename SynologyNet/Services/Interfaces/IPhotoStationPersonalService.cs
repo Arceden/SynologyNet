@@ -1,5 +1,6 @@
 ﻿using SynologyNet.Models.Requests.Photo;
 using SynologyNet.Models.Responses.Photo;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -22,7 +23,6 @@ namespace SynologyNet.Services.Interfaces
         /// </summary>
         /// <returns>List of shared albums</returns>
         Task<IEnumerable<Album>> GetSharedAlbums();
-
 
         /// <summary>
         /// Get a list of photos from the current user
@@ -66,11 +66,26 @@ namespace SynologyNet.Services.Interfaces
         Task<byte[]> DownloadPhoto(int photoId);
 
         /// <summary>
+        /// Download <seealso cref="Photo"/> as byte array
+        /// </summary>
+        /// <param name="photo"><seealso cref="Photo"/> to download</param>
+        /// <returns>Photo as bytearray</returns>
+        Task<byte[]> DownloadPhoto(Photo photo);
+
+        /// <summary>
         /// Download <seealso cref="Photo"/> from shared <seealso cref="Album"/> as byte array
         /// </summary>
         /// <param name="photoId"><seealso cref="Photo"/> identifier</param>
         /// <param name="passphrase">Shared <seealso cref="Album"/> passphrase</param>
         /// <returns>Photo as byte array</returns>
         Task<byte[]> DownloadPhoto(int photoId, string passphrase);
+
+        /// <summary>
+        /// Download <seealso cref="Photo"/> from shared <seealso cref="Album"/> as byte array
+        /// </summary>
+        /// <param name="photo"><seealso cref="Photo"/> to download</param>
+        /// <param name="album">Source <seealso cref="Album"/></param>
+        /// <returns></returns>
+        Task<byte[]> DownloadPhoto(Photo photo, Album album);
     }
 }

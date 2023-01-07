@@ -115,12 +115,11 @@ namespace SynologyNet.Repository
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
         }
 
-        /// <summary>
-        /// Download photo as bytearray
-        /// </summary>
-        /// <param name="photoId">Id of photo object</param>
-        /// <param name="passphrase">Album passphrase, required if photo comes from a shared album</param>
-        /// <returns>Data response object with byte array as data content</returns>
+        public Task<BaseDataResponse<byte[]>> DownloadPhoto(Photo photo, Album album)
+        {
+            return DownloadPhoto(photo.Id, album.Passphrase);
+        }
+
         [Request(Api = "SYNO.Foto.Download", Method = "download")]
         public async Task<BaseDataResponse<byte[]>> DownloadPhoto(int photoId, string? passphrase)
         {
