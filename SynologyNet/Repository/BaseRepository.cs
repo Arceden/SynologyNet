@@ -1,7 +1,7 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
 using SynologyNet.Helpers;
-using SynologyNet.Models.Requests.Filters;
+using SynologyNet.Models.Requests.Photo.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,5 +1,5 @@
 ﻿using SynologyNet.Exceptions;
-using SynologyNet.Models.Requests.Filters;
+using SynologyNet.Models.Requests.Photo.Filters;
 using SynologyNet.Models.Responses.Photo;
 using SynologyNet.Repository;
 using SynologyNet.Services.Interfaces;

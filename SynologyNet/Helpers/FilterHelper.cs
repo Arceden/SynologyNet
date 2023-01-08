@@ -1,4 +1,4 @@
-﻿using SynologyNet.Models.Requests.Filters;
+﻿using SynologyNet.Models.Requests.Photo.Filters;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json.Serialization;
