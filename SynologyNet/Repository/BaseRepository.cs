@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
 using SynologyNet.Helpers;
+using SynologyNet.Models.Requests.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,17 +24,24 @@ namespace SynologyNet.Repository
             _repository = (SynologyRepositoryAttribute)Attribute.GetCustomAttribute(this.GetType(), typeof(SynologyRepositoryAttribute));
         }
 
-        protected RestRequest PrepareRequest()
+        protected RestRequest PrepareRequest(params IFilter[] filters)
         {
             var method = GetMethod();
-            var metadata = (RequestAttribute)Attribute.GetCustomAttribute(method, typeof(RequestAttribute));
-            var request = new RestRequest(metadata.Path ?? _repository.DefaultPath);
+            var metadata = (RequestAttribute?) Attribute.GetCustomAttribute(method, typeof(RequestAttribute));
+            var request = new RestRequest(metadata?.Path ?? _repository.DefaultPath);
 
+            // Apply repository filters
             request.AddParameter("api", metadata.Api ?? _repository.DefaultApi);
             request.AddParameter("method", metadata.Method);
             request.AddParameter("version", metadata.Version);
             request.AddParameterIfNotNull("query", metadata.Query);
 
+            // Apply user filters
+            foreach (var filter in filters)
+                foreach (var option in filter.ToDictionary())
+                    request.AddParameter(option.Key, option.Value);
+
+            // Apply authentication
             if (metadata.RequiresAuthentication || _repository.RequiresAuthentication)
                 request = AddAuthentication(request);
 

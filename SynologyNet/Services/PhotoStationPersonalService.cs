@@ -1,5 +1,4 @@
 ﻿using SynologyNet.Exceptions;
-using SynologyNet.Models.Requests.Photo;
 using SynologyNet.Models.Responses.Photo;
 using SynologyNet.Repository;
 using SynologyNet.Services.Interfaces;
@@ -24,9 +23,9 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
-        public async Task<IEnumerable<Album>> GetAlbums(CollectionFilter? filter = null)
+        public async Task<IEnumerable<Album>> GetAlbums()
         {
-            var response = await Repository.GetAlbums(filter);
+            var response = await Repository.GetAlbums();
 
             CheckErrorCode(response);
 
@@ -42,9 +41,9 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
-        public async Task<IEnumerable<Photo>> GetPhotos(CollectionFilter? filter = null)
+        public async Task<IEnumerable<Photo>> GetPhotos()
         {
-            var response = await Repository.GetPhotos(filter);
+            var response = await Repository.GetPhotos();
 
             CheckErrorCode<PhotoErrorCode>(response);
 
@@ -60,7 +59,7 @@ namespace SynologyNet.Services
             return response.Data.List;
         }
 
-        public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, CollectionFilter? filter = null)
+        public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album)
         {
             var response = await Repository.GetAlbumPhotos(album);
 

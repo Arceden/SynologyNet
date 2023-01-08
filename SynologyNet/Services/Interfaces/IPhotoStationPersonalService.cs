@@ -1,6 +1,4 @@
-﻿using SynologyNet.Models.Requests.Photo;
-using SynologyNet.Models.Responses.Photo;
-using System;
+﻿using SynologyNet.Models.Responses.Photo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,9 +12,8 @@ namespace SynologyNet.Services.Interfaces
         /// <summary>
         /// Get list of albums made by the current user
         /// </summary>
-        /// <param name="filter">Filter options</param>
         /// <returns>List of albums</returns>
-        Task<IEnumerable<Album>> GetAlbums(CollectionFilter? filter = null);
+        Task<IEnumerable<Album>> GetAlbums();
 
         /// <summary>
         /// Get list of shared albums with the current user
@@ -27,9 +24,8 @@ namespace SynologyNet.Services.Interfaces
         /// <summary>
         /// Get a list of photos from the current user
         /// </summary>
-        /// <param name="filter">Filter options</param>
         /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetPhotos(CollectionFilter? filter = null);
+        Task<IEnumerable<Photo>> GetPhotos();
 
         /// <summary>
         /// Get list of recently added photos
@@ -41,9 +37,8 @@ namespace SynologyNet.Services.Interfaces
         /// Get list of photos from a specified <seealso cref="Album"/>
         /// </summary>
         /// <param name="album">Source <seealso cref="Album"/></param>
-        /// <param name="filter">Filter options</param>
         /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, CollectionFilter? filter = null);
+        Task<IEnumerable<Photo>> GetAlbumPhotos(Album album);
 
         /// <summary>
         /// Get list of shared <seealso cref="Album"/> photos with the current user
