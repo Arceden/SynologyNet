@@ -58,7 +58,8 @@ namespace SynologyNet.Repository
 
             var request = PrepareRequest(pagingFilter);
             request.AddParameter("type", "photo");
-            request.AddParameter("album_id", album.Id);
+            request.AddParameterIfNotNull("album_id", album.Passphrase == null || album.Passphrase == string.Empty ? album.Id : null);
+            request.AddParameterIfNotNull("passphrase", album.Passphrase == null || album.Passphrase == string.Empty ? null : album.Passphrase);
 
             return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request) ?? new();
         }
