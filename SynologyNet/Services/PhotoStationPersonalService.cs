@@ -1,4 +1,5 @@
 ﻿using SynologyNet.Exceptions;
+using SynologyNet.Models.Requests.Filters;
 using SynologyNet.Models.Responses.Photo;
 using SynologyNet.Repository;
 using SynologyNet.Services.Interfaces;
@@ -14,67 +15,67 @@ namespace SynologyNet.Services
         public PhotoStationPersonalService()
             => Repository = new PersonalPhotoRepository();
 
-        public async Task<IEnumerable<Folder>> GetFolders()
+        public async Task<IEnumerable<Folder>> GetFolders(PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetFolders();
+            var response = await Repository.GetFolders(pagingFilter: pagingFilter);
 
             CheckErrorCode(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Folder>();
         }
 
-        public async Task<IEnumerable<Album>> GetAlbums()
+        public async Task<IEnumerable<Album>> GetAlbums(PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetAlbums();
+            var response = await Repository.GetAlbums(pagingFilter: pagingFilter);
 
             CheckErrorCode(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Album>();
         }
 
-        public async Task<IEnumerable<Album>> GetSharedAlbums()
+        public async Task<IEnumerable<Album>> GetSharedAlbums(PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetSharedAlbums();
+            var response = await Repository.GetSharedAlbums(pagingFilter: pagingFilter);
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Album>();
         }
 
-        public async Task<IEnumerable<Photo>> GetPhotos()
+        public async Task<IEnumerable<Photo>> GetPhotos(PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetPhotos();
+            var response = await Repository.GetPhotos(pagingFilter: pagingFilter);
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Photo>();
         }
 
-        public async Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album)
+        public async Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album, PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetSharedAlbumPhotos(album);
+            var response = await Repository.GetSharedAlbumPhotos(album, pagingFilter: pagingFilter);
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Photo>();
         }
 
-        public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album)
+        public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetAlbumPhotos(album);
+            var response = await Repository.GetAlbumPhotos(album, pagingFilter: pagingFilter);
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Photo>();
         }
 
-        public async Task<IEnumerable<Photo>> GetRecentlyAddedPhotos()
+        public async Task<IEnumerable<Photo>> GetRecentlyAddedPhotos(PagingFilter? pagingFilter = null)
         {
-            var response = await Repository.GetRecentlyAddedPhotos();
+            var response = await Repository.GetRecentlyAddedPhotos(pagingFilter: pagingFilter);
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data.List;
+            return response.Data?.List ?? new List<Photo>();
         }
 
         public async Task<byte[]> DownloadPhoto(int photoId)
@@ -83,7 +84,7 @@ namespace SynologyNet.Services
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data;
+            return response.Data ?? System.Array.Empty<byte>();
         }
 
         public async Task<byte[]> DownloadPhoto(int photoId, string passphrase)
@@ -92,7 +93,7 @@ namespace SynologyNet.Services
 
             CheckErrorCode<PhotoErrorCode>(response);
 
-            return response.Data;
+            return response.Data ?? System.Array.Empty<byte>();
         }
 
         public Task<byte[]> DownloadPhoto(Photo photo)

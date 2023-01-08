@@ -7,7 +7,7 @@ using SynologyNet.Models.Responses.FileStation;
 namespace SynologyNet.Repository.FileStation;
 
 [SynologyRepository(DefaultPath = "entry.cgi", RequiresAuthentication = true)]
-public class FileStationRepository : BaseRepository
+class FileStationRepository : BaseRepository
 {
 	[Request(Api = "SYNO.FileStation.Info", Method = "get", Version = 2)]
 	public Task<BaseDataResponse<Info>> Info()

@@ -1,4 +1,5 @@
-﻿using SynologyNet.Models.Responses.Photo;
+﻿using SynologyNet.Models.Requests.Filters;
+using SynologyNet.Models.Responses.Photo;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,46 +13,53 @@ namespace SynologyNet.Services.Interfaces
         /// <summary>
         /// Get list of albums made by the current user
         /// </summary>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of albums</returns>
-        Task<IEnumerable<Album>> GetAlbums();
+        Task<IEnumerable<Album>> GetAlbums(PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Get list of shared albums with the current user
         /// </summary>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of shared albums</returns>
-        Task<IEnumerable<Album>> GetSharedAlbums();
+        Task<IEnumerable<Album>> GetSharedAlbums(PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Get a list of photos from the current user
         /// </summary>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetPhotos();
+        Task<IEnumerable<Photo>> GetPhotos(PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Get list of recently added photos
         /// </summary>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetRecentlyAddedPhotos();
+        Task<IEnumerable<Photo>> GetRecentlyAddedPhotos(PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Get list of photos from a specified <seealso cref="Album"/>
         /// </summary>
         /// <param name="album">Source <seealso cref="Album"/></param>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of photos</returns>
-        Task<IEnumerable<Photo>> GetAlbumPhotos(Album album);
+        Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Get list of shared <seealso cref="Album"/> photos with the current user
         /// </summary>
         /// <param name="album">Shared <seealso cref="Album"/></param>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of shared <seealso cref="Photo"/> within a <paramref name="album"/></returns>
-        Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album);
+        Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album, PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Get list of folders
         /// </summary>
+        /// <param name="pagingFilter">Pagination filtering for the collection</param>
         /// <returns>List of folders</returns>
-        Task<IEnumerable<Folder>> GetFolders();
+        Task<IEnumerable<Folder>> GetFolders(PagingFilter? pagingFilter = null);
 
         /// <summary>
         /// Download <seealso cref="Photo"/> as byte array

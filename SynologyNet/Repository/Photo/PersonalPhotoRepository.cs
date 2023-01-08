@@ -44,14 +44,11 @@ namespace SynologyNet.Repository
         {
             pagingFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", pagingFilter.Offset);
-            request.AddParameter("limit", pagingFilter.Limit);
-            //request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
+            var request = PrepareRequest(pagingFilter);
             request.AddParameter("type", "photo");
             request.AddParameter("passphrase", album.Passphrase);
 
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
@@ -59,15 +56,11 @@ namespace SynologyNet.Repository
         {
             pagingFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", pagingFilter.Offset);
-            request.AddParameter("limit", pagingFilter.Limit);
-            //request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
-            //request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
+            var request = PrepareRequest(pagingFilter);
             request.AddParameter("type", "photo");
             request.AddParameter("album_id", album.Id);
 
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
@@ -75,14 +68,10 @@ namespace SynologyNet.Repository
         {
             pagingFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", pagingFilter.Offset);
-            request.AddParameter("limit", pagingFilter.Limit);
-            //request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
-            //request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
+            var request = PrepareRequest(pagingFilter);
             request.AddParameter("type", "photo");
 
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Browse.RecentlyAdded", Method = "list", Version = 3)]
@@ -90,11 +79,7 @@ namespace SynologyNet.Repository
         {
             pagingFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", pagingFilter.Offset);
-            request.AddParameter("limit", pagingFilter.Limit);
-
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(PrepareRequest(pagingFilter)) ?? new();
         }
 
         public Task<BaseDataResponse<byte[]>> DownloadPhoto(Photo photo, Album album)
