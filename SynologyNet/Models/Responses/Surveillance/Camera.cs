@@ -39,7 +39,7 @@ namespace SynologyNet.Models.Responses.Surveillance
         public Stream Stream3 { get; set; }
     }
 
-    public record Stream
+    public class Stream
     {
         [JsonPropertyName("bitrateCtrl")]
         public int BitrateControl { get; set; }
