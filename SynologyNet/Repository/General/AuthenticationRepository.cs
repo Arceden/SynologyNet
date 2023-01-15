@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SynologyNet.Repository
 {
     [SynologyRepository(DefaultApi = "SYNO.API.Auth", DefaultPath = "auth.cgi")]
-    public class AuthenticationRepository : BaseRepository
+    class AuthenticationRepository : BaseRepository
     {
         [Request(Method = "login", Version = 3)]
         public async Task<BaseDataResponse<AuthenticationResponse>> Login(SynologyCredentials credentials, string session = null)

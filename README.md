@@ -12,7 +12,7 @@ await synology.Authentication.Login()
 
 // Synology Photo / Personal Space
 var photoStation = synology.PhotoStation.Personal;
-var sharedAlbums = await photoStation.GetSharedAlbums();
+var sharedAlbums = await photoStation.GetSharedAlbums(pagingFilter: new() { Offset = 10, Limit = 5 });
 var sharedPhotos = await photoStation.GetAlbumPhotos(sharedAlbums.First());
 
 // Synology Surveillance Station

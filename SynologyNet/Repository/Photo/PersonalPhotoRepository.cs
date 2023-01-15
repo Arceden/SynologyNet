@@ -1,7 +1,7 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
 using SynologyNet.Helpers;
-using SynologyNet.Models.Requests.Photo;
+using SynologyNet.Models.Requests.Photo.Filters;
 using SynologyNet.Models.Responses;
 using SynologyNet.Models.Responses.Photo;
 using System.Text.Json;
@@ -10,84 +10,87 @@ using System.Threading.Tasks;
 namespace SynologyNet.Repository
 {
     [SynologyRepository(DefaultPath = "entry.cgi", RequiresAuthentication = true)]
-    public class PersonalPhotoRepository : BaseRepository
+    class PersonalPhotoRepository : BaseRepository
     {
         [Request(Api = "SYNO.Foto.Browse.Folder", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Folder>>> GetFolders(CollectionFilter? collectionFilter = null)
+        public async Task<BaseDataResponse<ListObject<Folder>>> GetFolders(PagingFilter? pagingFilter = null, SortableFilter? sortableFilter = null)
         {
-            if (collectionFilter == null)
-                collectionFilter = new CollectionFilter();
+            pagingFilter ??= new();
+            sortableFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", collectionFilter.Offset);
-            request.AddParameter("limit", collectionFilter.Limit);
-            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
-            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
-
-            return await _client.GetAsync<BaseDataResponse<ListObject<Folder>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Folder>>>(PrepareRequest(pagingFilter, sortableFilter)) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Browse.Album", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(CollectionFilter? collectionFilter = null)
+        public async Task<BaseDataResponse<ListObject<Album>>> GetAlbums(PagingFilter? pagingFilter = null, SortableFilter? sortableFilter = null)
         {
-            if (collectionFilter == null)
-                collectionFilter = new CollectionFilter();
+            pagingFilter ??= new();
+            sortableFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", collectionFilter.Offset);
-            request.AddParameter("limit", collectionFilter.Limit);
-            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
-            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
-
-            return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(PrepareRequest(pagingFilter, sortableFilter)) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Sharing.Misc", Method = "list_shared_with_me_album", Version = 1)]
-        public async Task<BaseDataResponse<ListObject<Album>>> GetSharedAlbums(CollectionFilter? collectionFilter = null)
+        public async Task<BaseDataResponse<ListObject<Album>>> GetSharedAlbums(PagingFilter? pagingFilter = null, SortableFilter? sortableFilter = null)
         {
-            if (collectionFilter == null)
-                collectionFilter= new CollectionFilter();
+            pagingFilter ??= new();
+            sortableFilter ??= new();
 
-            var request = PrepareRequest();
-            request.AddParameter("offset", collectionFilter.Offset);
-            request.AddParameter("limit", collectionFilter.Limit);
-            request.AddParameter("sort_by", collectionFilter.SortBy.GetValue());
-            request.AddParameter("sort_direction", collectionFilter.SortDirection.GetValue());
-
-            return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Album>>>(PrepareRequest(pagingFilter, sortableFilter)) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
-        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(Album album, int offset = 0, int limit = 100)
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetAlbumPhotos(Album album, PagingFilter? pagingFilter = null)
         {
-            var request = PrepareRequest();
-            request.AddParameter("offset", offset);
-            request.AddParameter("limit", limit);
-            request.AddParameter("type", "photo");
+            pagingFilter ??= new();
+
+            var request = PrepareRequest(pagingFilter);
             request.AddParameterIfNotNull("album_id", album.Passphrase == null || album.Passphrase == string.Empty ? album.Id : null);
             request.AddParameterIfNotNull("passphrase", album.Passphrase == null || album.Passphrase == string.Empty ? null : album.Passphrase);
 
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request) ?? new();
+        }
+
+        [Request(Api = "SYNO.Foto.Browse.Item", Method = "list")]
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetPhotos(PagingFilter? pagingFilter = null)
+        {
+            pagingFilter ??= new();
+
+            var request = PrepareRequest(pagingFilter);
+            request.AddParameter("type", "photo");
+
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request) ?? new();
         }
 
         [Request(Api = "SYNO.Foto.Browse.RecentlyAdded", Method = "list", Version = 3)]
-        public async Task<BaseDataResponse<ListObject<Photo>>> GetRecentlyAddedPhotos(int offset = 0, int limit = 100)
+        public async Task<BaseDataResponse<ListObject<Photo>>> GetRecentlyAddedPhotos(PagingFilter? pagingFilter = null)
         {
-            var request = PrepareRequest();
-            request.AddParameter("offset", offset);
-            request.AddParameter("limit", limit);
+            pagingFilter ??= new();
 
-            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(request);
+            return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(PrepareRequest(pagingFilter)) ?? new();
+        }
+
+        public Task<BaseDataResponse<byte[]>> DownloadPhoto(Photo photo, Album album)
+        {
+            return DownloadPhoto(photo.Id, album.Passphrase);
         }
 
         [Request(Api = "SYNO.Foto.Download", Method = "download")]
-        public async Task<byte[]> DownloadPhoto(int photoId, string passphrase)
+        public async Task<BaseDataResponse<byte[]>> DownloadPhoto(int photoId, string? passphrase)
         {
             var request = PrepareRequest();
             request.AddParameter("unit_id", $"[{photoId}]");
             request.AddParameterIfNotNull("passphrase", passphrase);
 
-            return await _client.DownloadDataAsync(request);
+            var response = await _client.GetAsync(request);
+            var dataResponse = new BaseDataResponse<byte[]>() { Success = true };
+
+            if (response.ContentType == "application/json")
+                dataResponse = JsonSerializer.Deserialize<BaseDataResponse<byte[]>>(response?.Content ?? "") ?? new();
+            else
+                dataResponse.Data = response.RawBytes;
+
+            return dataResponse;
         }
     }
 }

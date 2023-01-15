@@ -3,7 +3,7 @@
 namespace SynologyNet.Models.Responses.Surveillance
 {
     public class SurveillanceInformation : BaseDataResponse<SurveillanceInformationData>
-    { }
+    { } 
 
     public class SurveillanceInformationData
     {

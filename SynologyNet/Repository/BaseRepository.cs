@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using SynologyNet.Attributes;
 using SynologyNet.Helpers;
+using SynologyNet.Models.Requests.Photo.Filters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,32 +10,39 @@ using System.Reflection;
 
 namespace SynologyNet.Repository
 {
-    public class BaseRepository
+    class BaseRepository
     {
         protected readonly RestClient _client;
         protected readonly SynologyRepositoryAttribute _repository;
 
-        public static IEnumerable<MethodInfo> RequestMethods { get; set; }
-        public static string BaseAddress { get; set; }
+        public static IEnumerable<MethodInfo> RequestMethods { get; set; } = new List<MethodInfo>();
+        public static string BaseAddress { get; set; } = string.Empty;
 
         public BaseRepository()
         {
             _client = new RestClient(BaseAddress);
-            _repository = (SynologyRepositoryAttribute)Attribute.GetCustomAttribute(this.GetType(), typeof(SynologyRepositoryAttribute));
+            _repository = (SynologyRepositoryAttribute?) Attribute.GetCustomAttribute(this.GetType(), typeof(SynologyRepositoryAttribute)) ?? new();
         }
 
-        protected RestRequest PrepareRequest()
+        protected RestRequest PrepareRequest(params IFilter[] filters)
         {
             var method = GetMethod();
-            var metadata = (RequestAttribute)Attribute.GetCustomAttribute(method, typeof(RequestAttribute));
-            var request = new RestRequest(metadata.Path ?? _repository.DefaultPath);
+            var metadata = (RequestAttribute?) Attribute.GetCustomAttribute(method, typeof(RequestAttribute));
+            var request = new RestRequest(metadata?.Path ?? _repository.DefaultPath);
 
-            request.AddParameter("api", metadata.Api ?? _repository.DefaultApi);
-            request.AddParameter("method", metadata.Method);
-            request.AddParameter("version", metadata.Version);
-            request.AddParameterIfNotNull("query", metadata.Query);
+            // Apply repository filters
+            request.AddParameter("api", metadata?.Api ?? _repository.DefaultApi);
+            request.AddParameter("method", metadata?.Method ?? string.Empty);
+            request.AddParameter("version", metadata?.Version ?? 1);
+            request.AddParameterIfNotNull("query", metadata?.Query ?? string.Empty);
 
-            if (metadata.RequiresAuthentication || _repository.RequiresAuthentication)
+            // Apply user filters
+            foreach (var filter in filters)
+                foreach (var option in filter.ToDictionary())
+                    request.AddParameter(option.Key, option.Value);
+
+            // Apply authentication
+            if ((metadata != null && metadata.RequiresAuthentication) || _repository.RequiresAuthentication)
                 request = AddAuthentication(request);
 
             return request;
@@ -52,10 +60,12 @@ namespace SynologyNet.Repository
                 .First();
         }
 
-        private RestRequest AddAuthentication(RestRequest request)
-        {
-            request.AddParameter("_sid", KeyHelper.GetSession().Sid);
-            return request;
-        }
+        /// <summary>
+        /// Add authentication details to te request
+        /// </summary>
+        /// <param name="request">HTTP Request object</param>
+        /// <returns>HTTP Request object</returns>
+        private static RestRequest AddAuthentication(RestRequest request)
+            => request.AddParameter("_sid", KeyHelper.GetSession().Sid);
     }
 }
