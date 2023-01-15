@@ -44,7 +44,7 @@ foreach (var album in sharedAlbums)
 {
     Console.WriteLine($" - {album.Name} {album.Shared}");
 
-    var photos = await photoStation.GetSharedAlbumPhotos(album);
+    var photos = await photoStation.GetAlbumPhotos(album);
 
     foreach (var photo in photos)
         Console.WriteLine($"\t+ {photo.Filename}");
@@ -63,7 +63,7 @@ Console.WriteLine();
 
 // Download shared photo
 Console.WriteLine("Download a photo from a shared album");
-var sharedPhotoToDownload = (await photoStation.GetSharedAlbumPhotos(sharedAlbums.First())).FirstOrDefault();
+var sharedPhotoToDownload = (await photoStation.GetAlbumPhotos(sharedAlbums.First())).FirstOrDefault();
 Console.WriteLine($" - Downloading {sharedPhotoToDownload.Filename}");
 var b = await photoStation.DownloadPhoto(sharedPhotoToDownload.Id, sharedAlbums.First().Passphrase);
 using var stream2 = File.Create($"./{sharedPhotoToDownload.Filename}");

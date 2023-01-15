@@ -47,14 +47,6 @@ namespace SynologyNet.Services.Interfaces
         Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, PagingFilter? pagingFilter = null);
 
         /// <summary>
-        /// Get list of shared <seealso cref="Album"/> photos with the current user
-        /// </summary>
-        /// <param name="album">Shared <seealso cref="Album"/></param>
-        /// <param name="pagingFilter">Pagination filtering for the collection</param>
-        /// <returns>List of shared <seealso cref="Photo"/> within a <paramref name="album"/></returns>
-        Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album, PagingFilter? pagingFilter = null);
-
-        /// <summary>
         /// Get list of folders
         /// </summary>
         /// <param name="pagingFilter">Pagination filtering for the collection</param>

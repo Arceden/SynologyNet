@@ -51,15 +51,6 @@ namespace SynologyNet.Services
             return response.Data?.List ?? new List<Photo>();
         }
 
-        public async Task<IEnumerable<Photo>> GetSharedAlbumPhotos(Album album, PagingFilter? pagingFilter = null)
-        {
-            var response = await Repository.GetSharedAlbumPhotos(album, pagingFilter: pagingFilter);
-
-            CheckErrorCode<PhotoErrorCode>(response);
-
-            return response.Data?.List ?? new List<Photo>();
-        }
-
         public async Task<IEnumerable<Photo>> GetAlbumPhotos(Album album, PagingFilter? pagingFilter = null)
         {
             var response = await Repository.GetAlbumPhotos(album, pagingFilter: pagingFilter);
