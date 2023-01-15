@@ -5,7 +5,7 @@ namespace SynologyNet.Models.Responses
     /// <summary>
     /// Base response object for the response status
     /// </summary>
-    public abstract record BaseResponse
+    public abstract class BaseResponse
     {
         /// <summary>
         /// True if the Synology endpoint returned with a valid response

@@ -5,7 +5,7 @@ namespace SynologyNet.Models.Responses.Photo
     /// <summary>
     /// Photo model
     /// </summary>
-    public record Photo
+    public class Photo
     {
         /// <summary>
         /// Name of the file as stored on the Synology filesystem

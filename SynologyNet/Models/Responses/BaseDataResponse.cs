@@ -6,7 +6,7 @@ namespace SynologyNet.Models.Responses
     /// Base record for the data response
     /// </summary>
     /// <typeparam name="T">Datatype of the response content</typeparam>
-    public record BaseDataResponse<T> : BaseResponse
+    public class BaseDataResponse<T> : BaseResponse
     {
         /// <summary>
         /// Requested response content

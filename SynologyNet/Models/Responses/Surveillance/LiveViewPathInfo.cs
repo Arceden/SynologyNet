@@ -3,10 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace SynologyNet.Models.Responses.Surveillance
 {
-    public record LiveViewPathInfoContainer : BaseDataResponse<List<LiveViewPathInfo>>
+    public class LiveViewPathInfoContainer : BaseDataResponse<List<LiveViewPathInfo>>
     { }
 
-    public record LiveViewPathInfo
+    public class LiveViewPathInfo
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }

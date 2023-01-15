@@ -5,7 +5,7 @@ namespace SynologyNet.Models.Responses
     /// <summary>
     /// Base error object
     /// </summary>
-    public record Error
+    public class Error
     {
         /// <summary>
         /// Identifiable error code
@@ -23,7 +23,7 @@ namespace SynologyNet.Models.Responses
     /// <summary>
     /// Descriptive error object
     /// </summary>
-    public record ErrorContent
+    public class ErrorContent
     {
         /// <summary>
         /// Name of the error

@@ -5,7 +5,7 @@ namespace SynologyNet.Models.Requests.Photo.Filters;
 /// <summary>
 /// Paging filters for a collection
 /// </summary>
-public record PagingFilter : IFilter
+public class PagingFilter : IFilter
 {
     /// <summary>
     /// Fetch collection with an offset which skips x amount of items

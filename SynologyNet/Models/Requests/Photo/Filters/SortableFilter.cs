@@ -6,7 +6,7 @@ namespace SynologyNet.Models.Requests.Photo.Filters;
 /// <summary>
 /// Filter for sortable collections
 /// </summary>
-public record SortableFilter : IFilter
+public class SortableFilter : IFilter
 {
     /// <summary>
     /// Sort by specific piece of file information
