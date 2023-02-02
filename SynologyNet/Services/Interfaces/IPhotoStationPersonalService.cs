@@ -18,6 +18,12 @@ namespace SynologyNet.Services.Interfaces
         Task<IEnumerable<Album>> GetAlbums(PagingFilter? pagingFilter = null);
 
         /// <summary>
+        /// Create normal album
+        /// </summary>
+        /// <returns>Created album</returns>
+        Task<Album> CreateNormalAlbum(string albumName);
+
+        /// <summary>
         /// Get list of shared albums with the current user
         /// </summary>
         /// <param name="pagingFilter">Pagination filtering for the collection</param>
@@ -82,5 +88,11 @@ namespace SynologyNet.Services.Interfaces
         /// <param name="album">Source <seealso cref="Album"/></param>
         /// <returns></returns>
         Task<byte[]> DownloadPhoto(Photo photo, Album album);
-    }
+
+		/// <summary>
+		/// Add item to album
+		/// </summary>
+		/// <returns>true if no errors were sent as result of operation, otherwise false</returns>
+		Task<bool> AddItemToAlbum(Photo item, Album album);
+	}
 }
