@@ -1,9 +1,11 @@
 ﻿using SynologyNet.Exceptions;
 using SynologyNet.Models.Requests.Photo.Filters;
+using SynologyNet.Models.Responses;
 using SynologyNet.Models.Responses.Photo;
 using SynologyNet.Repository;
 using SynologyNet.Services.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SynologyNet.Services
@@ -33,7 +35,16 @@ namespace SynologyNet.Services
             return response.Data?.List ?? new List<Album>();
         }
 
-        public async Task<IEnumerable<Album>> GetSharedAlbums(PagingFilter? pagingFilter = null)
+		public async Task<Album> CreateNormalAlbum(string albumName)
+		{
+			var response = await Repository.CreateNormalAlbum(albumName);
+
+			CheckErrorCode(response);
+
+			return response.Data?.Album ?? new Album();
+		}
+
+		public async Task<IEnumerable<Album>> GetSharedAlbums(PagingFilter? pagingFilter = null)
         {
             var response = await Repository.GetSharedAlbums(pagingFilter: pagingFilter);
 
@@ -96,5 +107,14 @@ namespace SynologyNet.Services
         {
             return DownloadPhoto(photo.Id, album.Passphrase);
         }
-    }
+
+		public async Task<bool> AddItemToAlbum(Photo item, Album album)
+		{
+			var response = await Repository.AddItemToAlbum(item, album);
+
+			CheckErrorCode<PhotoErrorCode>(response);
+
+            return response.Data?.ErrorList?.Count() == 0;
+		}
+	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SynologyNet.Models.Responses
 {
@@ -37,4 +38,13 @@ namespace SynologyNet.Models.Responses
         [JsonPropertyName("reason")]
         public string? Reason { get; set; }
     }
+
+	/// <summary>
+	/// Error list object
+	/// </summary>
+	public class ErrorListObject
+    {
+		[JsonPropertyName("error_list")]
+		public IEnumerable<ErrorContent> ErrorList { get; set; } // TODO: not tested, always received empty list with no structure, so the structure to deserialize is not known...
+	}
 }
