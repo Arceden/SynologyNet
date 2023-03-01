@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using SynologyNet.Models.Responses;
 using SynologyNet.Models.Responses.FileStation;
@@ -40,6 +41,18 @@ namespace SynologyNet.Services
             } while(response.Data.Finished == false);
 
             return response.Data;
+        }
+
+        public async Task<ListSharedFolderItems> ListSharedFolderItems( string path, bool recursive )
+        {
+            var response = await Repository.ListSharedFolderItems( path, recursive );
+            CheckErrorCode( response );
+            return response.Data;
+        }
+
+        public async Task<Stream> DownloadFile( string path ) { 
+            var response = await Repository.DownloadFile( path );
+            return response;
         }
     }
 }
