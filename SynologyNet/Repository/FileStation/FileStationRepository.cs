@@ -1,6 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using RestSharp;
 using SynologyNet.Attributes;
+using SynologyNet.Models.Requests.File.Filters;
+using SynologyNet.Models.Requests.Photo.Filters;
 using SynologyNet.Models.Responses;
 using SynologyNet.Models.Responses.FileStation;
 
@@ -36,5 +41,27 @@ class FileStationRepository : BaseRepository
 		var request = PrepareRequest();
 		request.AddParameter("taskid", taskid);
 		return await _client.GetAsync<BaseDataResponse<DirSize>>(request);
+	}
+
+	[Request( Api = "SYNO.FileStation.List", Method = "list", Version = 2 )]
+	public async Task<BaseDataResponse<ListSharedFolderItems>> ListSharedFolderItems( string path, bool recursive )
+	{
+		IFilter filter = new FolderNameFilter {
+			FolderPath = path
+		};
+		var request = PrepareRequest( filter );
+		return await _client.GetAsync<BaseDataResponse<ListSharedFolderItems>>( request );
+	}
+
+	[Request( Api = "SYNO.FileStation.Download", Method = "download", Version = 2 )]
+	public async Task<Stream> DownloadFile( string path ) {
+		var request = PrepareRequest();
+		request.AddParameter("path", path);
+		request.AddParameter("mode", "open");
+		return await _client.DownloadStreamAsync( request );
+	}
+
+	private HttpMessageHandler MsgHandler( HttpMessageHandler arg ) {
+		throw new NotImplementedException();
 	}
 }
