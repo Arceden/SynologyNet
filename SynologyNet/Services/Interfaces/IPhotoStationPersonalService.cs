@@ -94,5 +94,12 @@ namespace SynologyNet.Services.Interfaces
 		/// </summary>
 		/// <returns>true if no errors were sent as result of operation, otherwise false</returns>
 		Task<bool> AddItemToAlbum(Photo item, Album album);
+
+		/// <summary>
+		/// Search for <seealso cref="Photo"/> by filter
+		/// </summary>
+		/// <param name="searchFilter">Search filtering for photos</param>
+		/// <returns>List of photos</returns>
+		Task<IEnumerable<Photo>> SearchForPhotos(SearchFilter? searchFilter = null);
 	}
 }

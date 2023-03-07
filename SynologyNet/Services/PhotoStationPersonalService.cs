@@ -116,5 +116,14 @@ namespace SynologyNet.Services
 
             return response.Data?.ErrorList?.Count() == 0;
 		}
+
+		public async Task<IEnumerable<Photo>> SearchForPhotos(SearchFilter? searchFilter = null)
+		{
+			var response = await Repository.SearchForPhotos(searchFilter: searchFilter);
+
+			CheckErrorCode(response);
+
+			return response.Data?.List ?? new List<Photo>();
+		}
 	}
 }
