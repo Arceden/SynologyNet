@@ -111,5 +111,13 @@ namespace SynologyNet.Repository
 
 			return await _client.GetAsync<BaseDataResponse<ErrorListObject>>(request) ?? new();
 		}
+
+		[Request(Api = "SYNO.Foto.Search.Search", Method = "list_item")]
+		public async Task<BaseDataResponse<ListObject<Photo>>> SearchForPhotos(SearchFilter? searchFilter = null)
+		{
+			searchFilter ??= new();
+
+			return await _client.GetAsync<BaseDataResponse<ListObject<Photo>>>(PrepareRequest(searchFilter)) ?? new();
+		}
 	}
 }
